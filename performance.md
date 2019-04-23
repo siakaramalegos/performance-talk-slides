@@ -1,6 +1,6 @@
 ---
 theme: style.css
-verticalSeparator: -v-
+verticalSeparator: ---
 highlightTheme: github
 ---
 
@@ -13,12 +13,6 @@ highlightTheme: github
 ## hi, i'm sia
 
 <img src="./images/sia.gif" alt="Sia at Mardi Gras" height="500px">
-
----
-
-## Take out a piece of paper...
-
-<img src="./images/notes.jpg" alt="Note paper with three columns of implement, research, or seek assistance" height="500px">
 
 ---
 
@@ -41,13 +35,7 @@ highlightTheme: github
 
 > Starbucks implemented a 2x faster time to interactive resulting in a 65% increase in rewards registrations.
 
-<small>[Chrome Dev Summit](https://www.youtube.com/watch?v=Xryhxi45Q5M&t=1113s&index=6&list=PLNYkxOF6rcIDjlCx1PcphPpmf43aKOAdF )</small>
-
----
-
-> AliExpress reduced load by 36% and saw a 10.5% increase in orders.
-
-<small>https://wpostats.com/</small>
+<small>[Chrome Dev Summit 2018](https://www.youtube.com/watch?v=Xryhxi45Q5M&t=1113s&index=6&list=PLNYkxOF6rcIDjlCx1PcphPpmf43aKOAdF )</small>
 
 ---
 
@@ -59,89 +47,109 @@ Note: In 2016, Doubleclick by Google released a report saying that 53% of mobile
 
 ---
 
-# Measurement and Analysis
-
-Note: Does anyone know what the Pareto principle is?
+# 🧪 Test Environments 🧪
 
 ---
 
-## Pareto Principle
+## Lab/Synthetic Environment Tools
 
-Roughly 80% of the effects come from 20% of the causes.
+_Emulated CPU and network throttling_
 
-Note: So what does this mean?
+<div id="dev-tool">
+  <img class="nooutline" width="150px" src="./images/tool-devtools.svg" alt="Chrome DevTools"/>
+  <div>Chrome DevTools</div>
+</div>
+<div id="dev-tool">
+  <img class="nooutline" width="150px" src="./images/tool-lighthouse.svg" alt="Lighthouse"/>
+  <div>Lighthouse</div>
+</div>
+<div id="dev-tool">
+  <img class="nooutline" width="150px" src="./images/tool-psi.svg" alt="PageSpeed Insights"/>
+  <div>PageSpeed Insights</div>
+</div>
 
----
-
-## Be lazy. Only optimize the worst offenders.
-
-<img src="./images/lazy_puppy.gif" alt="Lazy puppy being dragged behind his toy" >
-
----
-
-# Which metrics matter?
-
----
-
-## ~~Load time~~ Speed Index
-
-Measures how quickly the page contents are visually populated
-
-- Expressed in milliseconds
-- Dependent on size of the view port
-- Use [webpagetest.org](https://www.webpagetest.org/) to measure your pages
-
-> Note: It is particularly useful for comparing experiences of pages against each other (before/after optimizing, my site vs competitor, etc) and should be used in combination with the other metrics (load time, start render, etc) to better understand a site's performance. Historically we have relied on milestone timings to determine how fast or slow web pages were.  The most common of these is the time until the browser reaches the load event for the main document (onload).  The load event is easy to measure both in a lab environment and in the real world.  Unfortunately, it isn't a very good indicator of the actual end-user experience.  As pages grow and load a lot of content that is not visible to the user or off the screen (below the fold) the time to reach the load event is extended even if the user-visible content has long-since rendered. Lighthouse may use a node module called Speedline for this.
-
-<small>https://sites.google.com/a/webpagetest.org/docs/using-webpagetest/metrics/speed-index</small>
+Note: DevTools for Network tab (load) and Performance tab (script execution costs)
 
 ---
 
-## Time to Interactive
+> Your laptop is a filthy liar.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Lx1cYJAVnzA" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<small>Alex Russell, [Progressive Performance talk at Chrome Dev Summit 2016](https://www.youtube.com/watch?v=4bZvq3nodf4)</small>
 
-<small>End to End Apps with Polymer by Kevin Schaaf, Polymer Summit 2017</small>
-
-Note: the point at which layout has stabilized, key webfonts are visible, and the main thread is available enough to handle user input.
+Note: network and CPU throttling are not representative of real user experiences. mobile CPUs process in a completely different way, and heat management is especially different.
 
 ---
 
-## Jank or Responsiveness
+## Optimize for the device and network your users have
 
-<img src="./images/frames_per_second.gif" alt="Frames per second comparison for visual jank" >
+- 2-5x difference in fastest vs slowest phones <!-- .element: class="fragment fade-in-then-semi-out" -->
+- 75% of worldwide mobile connections on 2G or 3G <!-- .element: class="fragment fade-in-then-semi-out" -->
+- Not just developing countries but rural areas or spotty networks like conference wifi <!-- .element: class="fragment fade-in-then-semi-out" -->
+- Use Google Analytics data to profile your users and configure webpagetest.org to reflect them more closely <!-- .element: class="fragment fade-in-then-semi-out" -->
+- Set performance budgets using webpack <!-- .element: class="fragment fade-in-then-semi-out" -->
 
-Note: Frame rate or frames per second (fps), is one measure of responsiveness. Modern devices refresh their screens at a rate of 60 fps. Converting that to an individual frame, we theoretically have 16 ms to render. In actuality, the browser needs some of that time, so we should target 10ms per frame. Any more, and the human eye will be able to detect the jank or jitter.
+<small>https://infrequently.org/2017/10/can-you-afford-it-real-world-web-performance-budgets/</small>
 
----
-
-# Measurement
-
----
-
-## Synthetic Testing
-
-Use WebPageTest and DevTools network tab to optimize load and speed index.
-
-<video controls autoplay loop>
-  <source src="./images/devtools_network.mp4" type="video/mp4">
-  <p>Your browser doesn't support HTML5 video. Here is
-     a <a href="https://i.gyazo.com/5164aab2cec42a31c6014a21c7b78f43.mp4">link to the video</a> instead.</p>
-</video>
+Note: Performance budgets at Google are $200 Android phone on a slow 3G network to target 5s initial load and 2s for subsequent. Converts to 130-170kb gzipped.
 
 ---
 
-## Synthetic Testing
+## Lab/Synthetic Environment Tools
 
-Use DevTools performance tab to optimize responsiveness.
+_Real devices and networks_
 
-<img src="./images/devtools.gif" alt="DevTools in action" height="400px">
+<div id="dev-tool">
+  <img class="nooutline" width="150px" src="./images/tool-webpagetest.svg" alt="WebPageTest"/>
+  <div>WebPageTest<br>&nbsp;</div>
+</div>
 
-Note: How does this image make you feel? Do you know what this comes from? How confident are you in your use of DevTools?
+<div id="dev-tool">
+  <img class="nooutline" width="150px" src="./images/tool-devtools.svg" alt="Chrome DevTools"/>
+  <div>DevTools +<br>connected device 📱</div>
+</div>
+
+Note: Buy a shitty phone and connect it to your computer for on-device debugging. webpagetest.org/easy has a basic set up - $200 phone, slow 3G?
 
 ---
 
-## Real User Monitoring (RUM)
+## WebPageTest
+
+<img src="./images/webpagetest_phones.jpeg" alt="Basement phone bank for webpagetest.org" width="80%" >
+
+<small>https://twitter.com/HenriHelvetica/status/1109557588411203584</small>
+
+---
+
+# But I want data from real users
+
+---
+
+## Field/RUM Testing Tools
+
+_Publicly available data_
+
+<div id="dev-tool">
+  <img class="nooutline" width="150px" src="./images/tool-crux.png" alt="CrUX"/>
+  <div>CrUX</div>
+</div>
+
+<div id="dev-tool">
+  <img class="nooutline" width="150px" src="./images/tool-psi.svg" alt="PageSpeed Insights"/>
+  <div>PageSpeed Insights</div>
+</div>
+
+<div id="dev-tool">
+  <img class="nooutline" width="150px" src="./images/tool-big-query.svg" alt="Big Query"/>
+  <div>Google BigQuery</div>
+</div>
+
+<small>Chrome User Experience (CrUX) data is available in PageSpeed Insights or BigQuery.</small>
+
+---
+
+## Field/RUM Testing Tools
+
+_Self-run data sent to your backend or analytics tool_
 
 - Navigation Timing API
 - Resource Timing API
@@ -151,20 +159,6 @@ Note: How does this image make you feel? Do you know what this comes from? How c
   https://developers.google.com/web/fundamentals/performance/navigation-and-resource-timing/
   <br />https://www.keycdn.com/blog/user-timing/
 <small>
-
----
-
-## Optimize for the device and network your users have
-
-- 2-5x difference in fastest vs slowest phones
-- 75% of worldwide mobile connections on 2G or 3G
-- Not just developing countries but rural areas or spotty networks like conference wifi
-- Use Google Analytics data to profile your users and configure [webpagetest.org](https://www.webpagetest.org/) to reflect them more closely
-- Set performance budgets using webpack
-
-<small>https://infrequently.org/2017/10/can-you-afford-it-real-world-web-performance-budgets/</small>
-
-Note: Performance budgets at Google are $200 Android phone on a slow 3G network to target 5s initial load and 2s for subsequent. Converts to 130-170kb gzipped.
 
 ---
 
@@ -180,15 +174,26 @@ Images account for 39-43% of the bytes on average needed to load a webpage.
 
 ## Image Optimization Toolbox
 
-- Use the right image type (`png` vs `jpg`, `gif` vs video).
-- Use the right size and src sets, and webpack loaders to auto-build src sets.
-- Compress images with a tool like ImageOptim, or use a webpack plugin to auto-optimize them for you.
-- Use newer, improved formats like `webp`.
+- Use the right image type (png vs jpg, gif vs video). <!-- .element: class="fragment fade-in-then-semi-out" -->
+- Serve the right size image for the user's screen width and device pixel ratio <!-- .element: class="fragment fade-in-then-semi-out" -->
+- Compress images with a tool like ImageOptim, or use a webpack plugin like imagemin-webpack-plugin <!-- .element: class="fragment fade-in-then-semi-out" -->
+- Use newer, improved formats like webp. <!-- .element: class="fragment fade-in-then-semi-out" -->
+- Lazy loading with a tool like lazysizes <!-- .element: class="fragment fade-in-then-semi-out" -->
 
 <small>
-  https://www.udacity.com/course/responsive-images--ud882
-  <br /> https://survivejs.com/webpack/loading/images/#optimizing-images
+  [Responsive images](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images) on MDN
+  <br /> [Image Performance](https://abookapart.com/products/image-performance) by Mat Marquis
 </small>
+
+---
+
+## I can't wait for the future
+
+<small>Native lazy-loading for `<img>` and `<iframe>` hopefully in Chrome ~75</small>
+
+<img src="./images/native_lazy.png_large" alt="<img loading=lazy> examples" class="nooutline" width="60%">
+
+<small>[addyosmani.com/blog/lazy-loading/](https://addyosmani.com/blog/lazy-loading/)</small>
 
 ---
 
@@ -213,23 +218,7 @@ Note: Are all assets created equally?
 
 ## Client vs Server vs Progressive Rendering
 
-<iframe width="749.4849246231156" height="463.3975" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTlTFx0oq6iA73uPBd4X1kaF05-R82KHMMGF7wzgvPTvdgMsPyjKZk5fAPOmPhc33g_Zoul7EsB2Cg9/pubchart?oid=882710936&amp;format=interactive"></iframe>
-
-<small>Inspired by https://twitter.com/aerotwist/status/729712502943174657</small>
-
----
-
-## Client vs Server vs Progressive Rendering
-
 <iframe width="749.4849246231156" height="463.3975" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTlTFx0oq6iA73uPBd4X1kaF05-R82KHMMGF7wzgvPTvdgMsPyjKZk5fAPOmPhc33g_Zoul7EsB2Cg9/pubchart?oid=2121502741&amp;format=interactive"></iframe>
-
-<small>Inspired by https://twitter.com/aerotwist/status/729712502943174657</small>
-
----
-
-## Client vs Server vs Progressive Rendering
-
-<iframe width="749.4849246231156" height="463.3975" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTlTFx0oq6iA73uPBd4X1kaF05-R82KHMMGF7wzgvPTvdgMsPyjKZk5fAPOmPhc33g_Zoul7EsB2Cg9/pubchart?oid=1240736189&amp;format=interactive"></iframe>
 
 <small>Inspired by https://twitter.com/aerotwist/status/729712502943174657</small>
 
@@ -261,37 +250,39 @@ Note: PRPL - push minimal code for initial route, render route and get interacti
 - **Only ship what's immediately needed** - use code splitting, pre-caching, and deferred or lazy loading.
 - **Minify** to speed up both download and parse/compile.
 - **Compress** with gzip or brotli.
-- **Remove unused code** with tree shaking and using module imports effectively.
+- **Remove unused code** with tree shaking or using module imports effectively.
+- Set up **performance budgets** to prevent performance creep.
+
+<small>https://webpack.js.org/configuration/performance/</small>
 
 ---
 
 ## Module Imports
 
 ```javascript
-// Big
+// Big = 527kb
 import _ from 'lodash';
-_.isEmpty({});
 
-// Big
+// Big = 527kb
 import {isEmpty} from 'lodash';
-isEmpty({});
 
-// Little
+// Little = 24kb
 import isEmpty from 'lodash/isEmpty';
-isEmpty({})
 
-// Big
+// Big = 544kb
 import moment from 'moment';
 
-// Little
-import addMinutes from 'date-fns/addMinutes';
+// Little = 11kb
+import addMinutes from 'date-fns/add_minutes';
 ```
 
 <small>Use Moment? Try [date-fns](https://date-fns.org/) instead.</small>
 
+Note: Tree-shaking can help do this for us so we don't have to worry so much about doing our imports "correctly".
+
 ---
 
-## The Cost of Unnecessary Transpiling
+## Differential Serving, a.k.a. Serve modern code to modern browsers
 
 ```html
 <!-- Browsers with ES module support load this file. -->
@@ -337,99 +328,25 @@ Note: We transpile and polyfill most code, but most users are on modern browsers
 
 ---
 
-> Most of your time is spent using the app, not waiting to load.
-
-<small>Devin Villegas, Netflix senior dev ops engineer</small>
+# ⌚ Latency ⌚
 
 ---
 
-## Optimizing Responsiveness
+## HTTP/1.1 versus HTTP/2
 
-- **Don't block the main thread!**
-- Avoid memory leaks - garbage collection can pause execution
-- Avoid long-running JS (>50ms) - chunk into smaller pieces, and/or use `requestAnimationFrame()` or `requestIdleCallback()` for scheduling
-- Use up-to-date frameworks that prioritize user input (like React Fiber starting in React v16.0)
-
-<small>
-  https://medium.com/dev-channel/the-cost-of-javascript-84009f51e99e
-  <br />
-  https://philipwalton.com/articles/why-web-developers-need-to-care-about-interactivity/
-</small>
-
-Note: If script executes for more than 50ms, time-to-interactive is delayed by the entire amount of time it takes to download, compile, and execute the JS — Alex Russell. Note that 3rd party widgets and scripts can significantly impact responsiveness.
-
----
-
-# Latency &amp; Caching
-
-Note: Who is brave enough to admit they don't really know what that means?
-
----
-
-<section>
-  <h2>latency</h2>
-  <p>/ˈlātənsē/</p>
-  <ol>
-	  <li class="fragment fade-in-then-semi-out">the state of existing but not yet being developed or manifest; concealment.
-      <br /><small><em>"tension, and the latency of violence, make the greatest impressions"</em></small></li>
-	  <li class="fragment fade-in-then-semi-out">the delay before a transfer of data begins following an instruction for its transfer.
-      <br /><small><em>"poor performance due to network latency"</em></small></li>
-  </ul>
-</section>
-
----
-
-## HTTP/1.1
-
-<img src="./images/http1-waterfall.png" alt="HTTP/1.1 waterfall showing only 6 downloads at one time" />
+<img src="./images/http_compared.jpg" alt="HTTP/1.1 and HTTP/2 waterfalls showing improved concurrent downloading" />
 
 <small>https://deliciousbrains.com/performance-best-practices-http2/</small>
 
-Note: Starts downloading assets as TCP connections become available
-
----
-
-## HTTP/2
-
-<img src="./images/http2-waterfall.png" alt="HTTP/2 waterfall shows all files downloading at one time" />
-
-<small>https://deliciousbrains.com/performance-best-practices-http2/</small>
-
-Note: In addition, header compression. HTTP2 server push has not lived up to the promise, but it's still a new area. For the most part, need to use https.
-
----
-
-<img src="./images/https-tweet.png" alt="Site with and without https - without has third party stuff added" height="550px" />
-
-<small>https://twitter.com/jaffathecake/status/1044121129848377344</small>
-
----
-
-<img src="./images/resource-hints.jpg_large" alt="Resource hints cheatsheet find pdf at https://storage.googleapis.com/resource-hints/resource-hints-cheatsheet.pdf" />
-
-<small>https://twitter.com/addyosmani/status/743571393174872064?lang=en</small>
-
-Note: pdf version of this is in the replies to this tweet
-
----
-
-## Latency Case Study: Fonts
-
-```css
-@import url('https://fonts.googleapis.com/css?family=Open+Sans|Muli');
-
-h1 {
-  font-family: 'Open Sans', sans-serif;
-}
-
-p {
-  font-family: 'Muli', sans-serif;
-}
-```
+Note: Starts downloading assets as TCP connections become available. In addition, header compression. HTTP2 server push has not lived up to the promise, but it's still a new area. For the most part, need to use https.
 
 ---
 
 ## Loading Google Fonts from CSS
+
+```css
+@import url('https://fonts.googleapis.com/css?family=Open+Sans|Muli');
+```
 
 <img src="./images/webfonts_css.png" alt="Google fonts load waterfall showing wasted time from CSS">
 
@@ -446,6 +363,12 @@ p {
 
 ---
 
+<img src="./images/resource-hints.jpg_large" alt="Resource hints cheatsheet find pdf at https://storage.googleapis.com/resource-hints/resource-hints-cheatsheet.pdf" />
+
+<small>https://twitter.com/addyosmani/status/743571393174872064?lang=en</small>
+
+---
+
 ## Google Fonts with preconnect!
 
 ```html
@@ -455,20 +378,6 @@ p {
 ```
 
 <img src="./images/webfonts_preconnect.png" alt="Google fonts load waterfall showing preconnect">
-
----
-
-## Webfonts
-
-<ul class="plus-minus">
-  <li class="plus">Hosted on fast and reliable CDNs</li>
-  <li class="plus">Can provide optimized variants based on user's browser</li>
-  <li class="plus">Opportunity for shared caching on popular fonts</li>
-  <li class="minus">Minumum of 2 separate requests</li>
-  <li class="minus">Can't use resource hints on the font file</li>
-  <li class="minus">Doesn't take advantage of HTTP2 multiplexing</li>
-  <li class="minus">No control over FOUT or FOIT</li>
-</ul>
 
 ---
 
