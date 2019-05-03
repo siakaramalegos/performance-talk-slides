@@ -16,6 +16,12 @@ highlightTheme: github
 
 ---
 
+## Take out a piece of paper...
+
+<img src="./images/Notes_caps.jpg" alt="Note paper with three columns of implement, research, or seek assistance" height="500px">
+
+---
+
 <!-- .slide: data-background="./images/elevator2.jpg" -->
 <h1 class="dark-background">
   <span class="highlighter">Why do elevators have mirrors?</span>
